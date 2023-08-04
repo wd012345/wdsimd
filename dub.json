@@ -1,0 +1,17 @@
+{
+	"authors": [
+		"Stefan Wittwer <info@wittwer-datatools.ch>"
+	],
+	"copyright": "Copyright © 2023, S. Wittwer <info@wittwer-datatools.ch>",
+	"description": "Fast Algorithms for Intel(R) SIMD.",
+	"license": "GPL-3.0",
+	"name": "wdsimd",
+	"postBuildCommands": [
+		"make clean"
+	],
+	"preBuildCommands": [
+		"make"
+	],
+	"targetType": "library",
+	"version": "0.3.0"
+}

@@ -1,0 +1,486 @@
+# file:         Makefile of project wdsimd
+# content:      build library from AVX2/AVX512 assembly routines collection
+# author:       Stefan Wittwer, info@wittwer-datatools.ch
+
+
+## assign release and debug library
+WDSIMD_LIB = wdsimd.a
+WDSIMD_DBG_LIB = wdsimd.dbg.a
+
+
+## assign debug parameters for GDB (The GNU Debugger)
+WDSIMD_GDB = wdsimd.gdb
+
+
+## define source modules
+WDSIMD_MOD = \
+	sdivv32fp256 \
+	sdivv32fp512 \
+	sdivv64fp256 \
+	sdivv64fp512 \
+	ssubv32fp256 \
+	ssubv32fp512 \
+	ssubv64fp256 \
+	ssubv64fp512 \
+	vadds32fp256 \
+	vadds32fp512 \
+	vadds64fp256 \
+	vadds64fp512 \
+	vaddv32fp256 \
+	vaddv32fp512 \
+	vaddv64fp256 \
+	vaddv64fp512 \
+	vdivs32fp256 \
+	vdivs32fp512 \
+	vdivs64fp256 \
+	vdivs64fp512 \
+	vdivv32fp256 \
+	vdivv32fp512 \
+	vdivv64fp256 \
+	vdivv64fp512 \
+	vequs32fp256 \
+	vequs32fp512 \
+	vequs64fp256 \
+	vequs64fp512 \
+	vequv32fp256 \
+	vequv32fp512 \
+	vequv64fp256 \
+	vequv64fp512 \
+	vmuls32fp256 \
+	vmuls32fp512 \
+	vmuls64fp256 \
+	vmuls64fp512 \
+	vmulv32fp256 \
+	vmulv32fp512 \
+	vmulv64fp256 \
+	vmulv64fp512 \
+	vsprv32fp256 \
+	vsprv32fp512 \
+	vsprv64fp256 \
+	vsprv64fp512 \
+	vsubs32fp256 \
+	vsubs32fp512 \
+	vsubs64fp256 \
+	vsubs64fp512 \
+	vsubv32fp256 \
+	vsubv32fp512 \
+	vsubv64fp256 \
+	vsubv64fp512
+
+
+## set all release and debug objects
+WDSIMD_OBJ =  $(addprefix source/, $(addsuffix .o, $(WDSIMD_MOD)))
+WDSIMD_DBG_OBJ = $(addprefix source/, $(addsuffix .dbg.o, $(WDSIMD_MOD)))
+
+
+## shorten source filenames
+SDIVV32FP256_ASM = source/sdivv32fp256.asm
+SDIVV32FP512_ASM = source/sdivv32fp512.asm
+SDIVV64FP256_ASM = source/sdivv64fp256.asm
+SDIVV64FP512_ASM = source/sdivv64fp512.asm
+SSUBV32FP256_ASM = source/ssubv32fp256.asm
+SSUBV32FP512_ASM = source/ssubv32fp512.asm
+SSUBV64FP256_ASM = source/ssubv64fp256.asm
+SSUBV64FP512_ASM = source/ssubv64fp512.asm
+VADDS32FP256_ASM = source/vadds32fp256.asm
+VADDS32FP512_ASM = source/vadds32fp512.asm
+VADDS64FP256_ASM = source/vadds64fp256.asm
+VADDS64FP512_ASM = source/vadds64fp512.asm
+VADDV32FP256_ASM = source/vaddv32fp256.asm
+VADDV32FP512_ASM = source/vaddv32fp512.asm
+VADDV64FP256_ASM = source/vaddv64fp256.asm
+VADDV64FP512_ASM = source/vaddv64fp512.asm
+VDIVS32FP256_ASM = source/vdivs32fp256.asm
+VDIVS32FP512_ASM = source/vdivs32fp512.asm
+VDIVS64FP256_ASM = source/vdivs64fp256.asm
+VDIVS64FP512_ASM = source/vdivs64fp512.asm
+VDIVV32FP256_ASM = source/vdivv32fp256.asm
+VDIVV32FP512_ASM = source/vdivv32fp512.asm
+VDIVV64FP256_ASM = source/vdivv64fp256.asm
+VDIVV64FP512_ASM = source/vdivv64fp512.asm
+VEQUS32FP256_ASM = source/vequs32fp256.asm
+VEQUS32FP512_ASM = source/vequs32fp512.asm
+VEQUS64FP256_ASM = source/vequs64fp256.asm
+VEQUS64FP512_ASM = source/vequs64fp512.asm
+VEQUV32FP256_ASM = source/vequv32fp256.asm
+VEQUV32FP512_ASM = source/vequv32fp512.asm
+VEQUV64FP256_ASM = source/vequv64fp256.asm
+VEQUV64FP512_ASM = source/vequv64fp512.asm
+VMULS32FP256_ASM = source/vmuls32fp256.asm
+VMULS32FP512_ASM = source/vmuls32fp512.asm
+VMULS64FP256_ASM = source/vmuls64fp256.asm
+VMULS64FP512_ASM = source/vmuls64fp512.asm
+VMULV32FP256_ASM = source/vmulv32fp256.asm
+VMULV32FP512_ASM = source/vmulv32fp512.asm
+VMULV64FP256_ASM = source/vmulv64fp256.asm
+VMULV64FP512_ASM = source/vmulv64fp512.asm
+VSPRV32FP256_ASM = source/vsprv32fp256.asm
+VSPRV32FP512_ASM = source/vsprv32fp512.asm
+VSPRV64FP256_ASM = source/vsprv64fp256.asm
+VSPRV64FP512_ASM = source/vsprv64fp512.asm
+VSUBS32FP256_ASM = source/vsubs32fp256.asm
+VSUBS32FP512_ASM = source/vsubs32fp512.asm
+VSUBS64FP256_ASM = source/vsubs64fp256.asm
+VSUBS64FP512_ASM = source/vsubs64fp512.asm
+VSUBV32FP256_ASM = source/vsubv32fp256.asm
+VSUBV32FP512_ASM = source/vsubv32fp512.asm
+VSUBV64FP256_ASM = source/vsubv64fp256.asm
+VSUBV64FP512_ASM = source/vsubv64fp512.asm
+
+
+## shorten release object filenames
+SDIVV32FP256_O = source/sdivv32fp256.o
+SDIVV32FP512_O = source/sdivv32fp512.o
+SDIVV64FP256_O = source/sdivv64fp256.o
+SDIVV64FP512_O = source/sdivv64fp512.o
+SSUBV32FP256_O = source/ssubv32fp256.o
+SSUBV32FP512_O = source/ssubv32fp512.o
+SSUBV64FP256_O = source/ssubv64fp256.o
+SSUBV64FP512_O = source/ssubv64fp512.o
+VADDS32FP256_O = source/vadds32fp256.o
+VADDS32FP512_O = source/vadds32fp512.o
+VADDS64FP256_O = source/vadds64fp256.o
+VADDS64FP512_O = source/vadds64fp512.o
+VADDV32FP256_O = source/vaddv32fp256.o
+VADDV32FP512_O = source/vaddv32fp512.o
+VADDV64FP256_O = source/vaddv64fp256.o
+VADDV64FP512_O = source/vaddv64fp512.o
+VDIVS32FP256_O = source/vdivs32fp256.o
+VDIVS32FP512_O = source/vdivs32fp512.o
+VDIVS64FP256_O = source/vdivs64fp256.o
+VDIVS64FP512_O = source/vdivs64fp512.o
+VDIVV32FP256_O = source/vdivv32fp256.o
+VDIVV32FP512_O = source/vdivv32fp512.o
+VDIVV64FP256_O = source/vdivv64fp256.o
+VDIVV64FP512_O = source/vdivv64fp512.o
+VEQUS32FP256_O = source/vequs32fp256.o
+VEQUS32FP512_O = source/vequs32fp512.o
+VEQUS64FP256_O = source/vequs64fp256.o
+VEQUS64FP512_O = source/vequs64fp512.o
+VEQUV32FP256_O = source/vequv32fp256.o
+VEQUV32FP512_O = source/vequv32fp512.o
+VEQUV64FP256_O = source/vequv64fp256.o
+VEQUV64FP512_O = source/vequv64fp512.o
+VMULS32FP256_O = source/vmuls32fp256.o
+VMULS32FP512_O = source/vmuls32fp512.o
+VMULS64FP256_O = source/vmuls64fp256.o
+VMULS64FP512_O = source/vmuls64fp512.o
+VMULV32FP256_O = source/vmulv32fp256.o
+VMULV32FP512_O = source/vmulv32fp512.o
+VMULV64FP256_O = source/vmulv64fp256.o
+VMULV64FP512_O = source/vmulv64fp512.o
+VSPRV32FP256_O = source/vsprv32fp256.o
+VSPRV32FP512_O = source/vsprv32fp512.o
+VSPRV64FP256_O = source/vsprv64fp256.o
+VSPRV64FP512_O = source/vsprv64fp512.o
+VSUBS32FP256_O = source/vsubs32fp256.o
+VSUBS32FP512_O = source/vsubs32fp512.o
+VSUBS64FP256_O = source/vsubs64fp256.o
+VSUBS64FP512_O = source/vsubs64fp512.o
+VSUBV32FP256_O = source/vsubv32fp256.o
+VSUBV32FP512_O = source/vsubv32fp512.o
+VSUBV64FP256_O = source/vsubv64fp256.o
+VSUBV64FP512_O = source/vsubv64fp512.o
+
+
+## shorten debug object filenames
+SDIVV32FP256_DBG_O = source/sdivv32fp256.dbg.o
+SDIVV32FP512_DBG_O = source/sdivv32fp512.dbg.o
+SDIVV64FP256_DBG_O = source/sdivv64fp256.dbg.o
+SDIVV64FP512_DBG_O = source/sdivv64fp512.dbg.o
+SSUBV32FP256_DBG_O = source/ssubv32fp256.dbg.o
+SSUBV32FP512_DBG_O = source/ssubv32fp512.dbg.o
+SSUBV64FP256_DBG_O = source/ssubv64fp256.dbg.o
+SSUBV64FP512_DBG_O = source/ssubv64fp512.dbg.o
+VADDS32FP256_DBG_O = source/vadds32fp256.dbg.o
+VADDS32FP512_DBG_O = source/vadds32fp512.dbg.o
+VADDS64FP256_DBG_O = source/vadds64fp256.dbg.o
+VADDS64FP512_DBG_O = source/vadds64fp512.dbg.o
+VADDV32FP256_DBG_O = source/vaddv32fp256.dbg.o
+VADDV32FP512_DBG_O = source/vaddv32fp512.dbg.o
+VADDV64FP256_DBG_O = source/vaddv64fp256.dbg.o
+VADDV64FP512_DBG_O = source/vaddv64fp512.dbg.o
+VDIVS32FP256_DBG_O = source/vdivs32fp256.dbg.o
+VDIVS32FP512_DBG_O = source/vdivs32fp512.dbg.o
+VDIVS64FP256_DBG_O = source/vdivs64fp256.dbg.o
+VDIVS64FP512_DBG_O = source/vdivs64fp512.dbg.o
+VDIVV32FP256_DBG_O = source/vdivv32fp256.dbg.o
+VDIVV32FP512_DBG_O = source/vdivv32fp512.dbg.o
+VDIVV64FP256_DBG_O = source/vdivv64fp256.dbg.o
+VDIVV64FP512_DBG_O = source/vdivv64fp512.dbg.o
+VEQUS32FP256_DBG_O = source/vequs32fp256.dbg.o
+VEQUS32FP512_DBG_O = source/vequs32fp512.dbg.o
+VEQUS64FP256_DBG_O = source/vequs64fp256.dbg.o
+VEQUS64FP512_DBG_O = source/vequs64fp512.dbg.o
+VEQUV32FP256_DBG_O = source/vequv32fp256.dbg.o
+VEQUV32FP512_DBG_O = source/vequv32fp512.dbg.o
+VEQUV64FP256_DBG_O = source/vequv64fp256.dbg.o
+VEQUV64FP512_DBG_O = source/vequv64fp512.dbg.o
+VMULS32FP256_DBG_O = source/vmuls32fp256.dbg.o
+VMULS32FP512_DBG_O = source/vmuls32fp512.dbg.o
+VMULS64FP256_DBG_O = source/vmuls64fp256.dbg.o
+VMULS64FP512_DBG_O = source/vmuls64fp512.dbg.o
+VMULV32FP256_DBG_O = source/vmulv32fp256.dbg.o
+VMULV32FP512_DBG_O = source/vmulv32fp512.dbg.o
+VMULV64FP256_DBG_O = source/vmulv64fp256.dbg.o
+VMULV64FP512_DBG_O = source/vmulv64fp512.dbg.o
+VSPRV32FP256_DBG_O = source/vsprv32fp256.dbg.o
+VSPRV32FP512_DBG_O = source/vsprv32fp512.dbg.o
+VSPRV64FP256_DBG_O = source/vsprv64fp256.dbg.o
+VSPRV64FP512_DBG_O = source/vsprv64fp512.dbg.o
+VSUBS32FP256_DBG_O = source/vsubs32fp256.dbg.o
+VSUBS32FP512_DBG_O = source/vsubs32fp512.dbg.o
+VSUBS64FP256_DBG_O = source/vsubs64fp256.dbg.o
+VSUBS64FP512_DBG_O = source/vsubs64fp512.dbg.o
+VSUBV32FP256_DBG_O = source/vsubv32fp256.dbg.o
+VSUBV32FP512_DBG_O = source/vsubv32fp512.dbg.o
+VSUBV64FP256_DBG_O = source/vsubv64fp256.dbg.o
+VSUBV64FP512_DBG_O = source/vsubv64fp512.dbg.o
+
+
+## set release and debug build parameters
+ASMD = -F dwarf -f elf64 -g -O0 -Wall
+ASMR = -f elf64 -Ox
+DMDD = -cov -de -debug -g -m64 -map -v -w -L-verbose
+DMDR = -boundscheck=off -inline -m64 -O -release
+
+
+## build target executable
+#$(WDSIMD_EXE) : wdsimd.o $(WDSIMD_LIB)
+#	dmd $(DMDR) -of=$(WDSIMD_EXE) $(WDSIMD_LIB) wdsimd.o
+#	dmd $(DMDD) -of=$(WDSIMD_DBG_EXE) $(WDSIMD_DBG_LIB) wdsimd.dbg.o
+
+#wdsimd.o : wdsimd.d
+#	dmd -c $(DMDR) -of=wdsimd.o wdsimd.d
+#	dmd -c $(DMDD) -of=wdsimd.dbg.o wdsimd.d
+
+
+## build libraries
+$(WDSIMD_LIB) : $(WDSIMD_OBJ)
+	dmd -lib $(DMDR) -of=$(WDSIMD_LIB) $(WDSIMD_OBJ)
+	dmd -lib $(DMDD) -of=$(WDSIMD_DBG_LIB) $(WDSIMD_DBG_OBJ)
+
+
+## build objects
+$(SDIVV32FP256_O) : $(SDIVV32FP256_ASM)
+	nasm $(ASMD) -o $(SDIVV32FP256_DBG_O) $(SDIVV32FP256_ASM)
+	nasm $(ASMR) -o $(SDIVV32FP256_O) $(SDIVV32FP256_ASM)
+
+$(SDIVV32FP512_O) : $(SDIVV32FP512_ASM)
+	nasm $(ASMD) -o $(SDIVV32FP512_DBG_O) $(SDIVV32FP512_ASM)
+	nasm $(ASMR) -o $(SDIVV32FP512_O) $(SDIVV32FP512_ASM)
+
+$(SDIVV64FP256_O) : $(SDIVV64FP256_ASM)
+	nasm $(ASMD) -o $(SDIVV64FP256_DBG_O) $(SDIVV64FP256_ASM)
+	nasm $(ASMR) -o $(SDIVV64FP256_O) $(SDIVV64FP256_ASM)
+
+$(SDIVV64FP512_O) : $(SDIVV64FP512_ASM)
+	nasm $(ASMD) -o $(SDIVV64FP512_DBG_O) $(SDIVV64FP512_ASM)
+	nasm $(ASMR) -o $(SDIVV64FP512_O) $(SDIVV64FP512_ASM)
+
+$(SSUBV32FP256_O) : $(SSUBV32FP256_ASM)
+	nasm $(ASMD) -o $(SSUBV32FP256_DBG_O) $(SSUBV32FP256_ASM)
+	nasm $(ASMR) -o $(SSUBV32FP256_O) $(SSUBV32FP256_ASM)
+
+$(SSUBV32FP512_O) : $(SSUBV32FP512_ASM)
+	nasm $(ASMD) -o $(SSUBV32FP512_DBG_O) $(SSUBV32FP512_ASM)
+	nasm $(ASMR) -o $(SSUBV32FP512_O) $(SSUBV32FP512_ASM)
+
+$(SSUBV64FP256_O) : $(SSUBV64FP256_ASM)
+	nasm $(ASMD) -o $(SSUBV64FP256_DBG_O) $(SSUBV64FP256_ASM)
+	nasm $(ASMR) -o $(SSUBV64FP256_O) $(SSUBV64FP256_ASM)
+
+$(SSUBV64FP512_O) : $(SSUBV64FP512_ASM)
+	nasm $(ASMD) -o $(SSUBV64FP512_DBG_O) $(SSUBV64FP512_ASM)
+	nasm $(ASMR) -o $(SSUBV64FP512_O) $(SSUBV64FP512_ASM)
+
+$(VADDS32FP256_O) : $(VADDS32FP256_ASM)
+	nasm $(ASMD) -o $(VADDS32FP256_DBG_O) $(VADDS32FP256_ASM)
+	nasm $(ASMR) -o $(VADDS32FP256_O) $(VADDS32FP256_ASM)
+
+$(VADDS32FP512_O) : $(VADDS32FP512_ASM)
+	nasm $(ASMD) -o $(VADDS32FP512_DBG_O) $(VADDS32FP512_ASM)
+	nasm $(ASMR) -o $(VADDS32FP512_O) $(VADDS32FP512_ASM)
+
+$(VADDS64FP256_O) : $(VADDS64FP256_ASM)
+	nasm $(ASMD) -o $(VADDS64FP256_DBG_O) $(VADDS64FP256_ASM)
+	nasm $(ASMR) -o $(VADDS64FP256_O) $(VADDS64FP256_ASM)
+
+$(VADDS64FP512_O) : $(VADDS64FP512_ASM)
+	nasm $(ASMD) -o $(VADDS64FP512_DBG_O) $(VADDS64FP512_ASM)
+	nasm $(ASMR) -o $(VADDS64FP512_O) $(VADDS64FP512_ASM)
+
+$(VADDV32FP256_O) : $(VADDV32FP256_ASM)
+	nasm $(ASMD) -o $(VADDV32FP256_DBG_O) $(VADDV32FP256_ASM)
+	nasm $(ASMR) -o $(VADDV32FP256_O) $(VADDV32FP256_ASM)
+
+$(VADDV32FP512_O) : $(VADDV32FP512_ASM)
+	nasm $(ASMD) -o $(VADDV32FP512_DBG_O) $(VADDV32FP512_ASM)
+	nasm $(ASMR) -o $(VADDV32FP512_O) $(VADDV32FP512_ASM)
+
+$(VADDV64FP256_O) : $(VADDV64FP256_ASM)
+	nasm $(ASMD) -o $(VADDV64FP256_DBG_O) $(VADDV64FP256_ASM)
+	nasm $(ASMR) -o $(VADDV64FP256_O) $(VADDV64FP256_ASM)
+
+$(VADDV64FP512_O) : $(VADDV64FP512_ASM)
+	nasm $(ASMD) -o $(VADDV64FP512_DBG_O) $(VADDV64FP512_ASM)
+	nasm $(ASMR) -o $(VADDV64FP512_O) $(VADDV64FP512_ASM)
+
+$(VDIVS32FP256_O) : $(VDIVS32FP256_ASM)
+	nasm $(ASMD) -o $(VDIVS32FP256_DBG_O) $(VDIVS32FP256_ASM)
+	nasm $(ASMR) -o $(VDIVS32FP256_O) $(VDIVS32FP256_ASM)
+
+$(VDIVS32FP512_O) : $(VDIVS32FP512_ASM)
+	nasm $(ASMD) -o $(VDIVS32FP512_DBG_O) $(VDIVS32FP512_ASM)
+	nasm $(ASMR) -o $(VDIVS32FP512_O) $(VDIVS32FP512_ASM)
+
+$(VDIVS64FP256_O) : $(VDIVS64FP256_ASM)
+	nasm $(ASMD) -o $(VDIVS64FP256_DBG_O) $(VDIVS64FP256_ASM)
+	nasm $(ASMR) -o $(VDIVS64FP256_O) $(VDIVS64FP256_ASM)
+
+$(VDIVS64FP512_O) : $(VDIVS64FP512_ASM)
+	nasm $(ASMD) -o $(VDIVS64FP512_DBG_O) $(VDIVS64FP512_ASM)
+	nasm $(ASMR) -o $(VDIVS64FP512_O) $(VDIVS64FP512_ASM)
+
+$(VDIVV32FP256_O) : $(VDIVV32FP256_ASM)
+	nasm $(ASMD) -o $(VDIVV32FP256_DBG_O) $(VDIVV32FP256_ASM)
+	nasm $(ASMR) -o $(VDIVV32FP256_O) $(VDIVV32FP256_ASM)
+
+$(VDIVV32FP512_O) : $(VDIVV32FP512_ASM)
+	nasm $(ASMD) -o $(VDIVV32FP512_DBG_O) $(VDIVV32FP512_ASM)
+	nasm $(ASMR) -o $(VDIVV32FP512_O) $(VDIVV32FP512_ASM)
+
+$(VDIVV64FP256_O) : $(VDIVV64FP256_ASM)
+	nasm $(ASMD) -o $(VDIVV64FP256_DBG_O) $(VDIVV64FP256_ASM)
+	nasm $(ASMR) -o $(VDIVV64FP256_O) $(VDIVV64FP256_ASM)
+
+$(VDIVV64FP512_O) : $(VDIVV64FP512_ASM)
+	nasm $(ASMD) -o $(VDIVV64FP512_DBG_O) $(VDIVV64FP512_ASM)
+	nasm $(ASMR) -o $(VDIVV64FP512_O) $(VDIVV64FP512_ASM)
+
+$(VEQUS32FP256_O) : $(VEQUS32FP256_ASM)
+	nasm $(ASMD) -o $(VEQUS32FP256_DBG_O) $(VEQUS32FP256_ASM)
+	nasm $(ASMR) -o $(VEQUS32FP256_O) $(VEQUS32FP256_ASM)
+
+$(VEQUS32FP512_O) : $(VEQUS32FP512_ASM)
+	nasm $(ASMD) -o $(VEQUS32FP512_DBG_O) $(VEQUS32FP512_ASM)
+	nasm $(ASMR) -o $(VEQUS32FP512_O) $(VEQUS32FP512_ASM)
+
+$(VEQUS64FP256_O) : $(VEQUS64FP256_ASM)
+	nasm $(ASMD) -o $(VEQUS64FP256_DBG_O) $(VEQUS64FP256_ASM)
+	nasm $(ASMR) -o $(VEQUS64FP256_O) $(VEQUS64FP256_ASM)
+
+$(VEQUS64FP512_O) : $(VEQUS64FP512_ASM)
+	nasm $(ASMD) -o $(VEQUS64FP512_DBG_O) $(VEQUS64FP512_ASM)
+	nasm $(ASMR) -o $(VEQUS64FP512_O) $(VEQUS64FP512_ASM)
+
+$(VEQUV32FP256_O) : $(VEQUV32FP256_ASM)
+	nasm $(ASMD) -o $(VEQUV32FP256_DBG_O) $(VEQUV32FP256_ASM)
+	nasm $(ASMR) -o $(VEQUV32FP256_O) $(VEQUV32FP256_ASM)
+
+$(VEQUV32FP512_O) : $(VEQUV32FP512_ASM)
+	nasm $(ASMD) -o $(VEQUV32FP512_DBG_O) $(VEQUV32FP512_ASM)
+	nasm $(ASMR) -o $(VEQUV32FP512_O) $(VEQUV32FP512_ASM)
+
+$(VEQUV64FP256_O) : $(VEQUV64FP256_ASM)
+	nasm $(ASMD) -o $(VEQUV64FP256_DBG_O) $(VEQUV64FP256_ASM)
+	nasm $(ASMR) -o $(VEQUV64FP256_O) $(VEQUV64FP256_ASM)
+
+$(VEQUV64FP512_O) : $(VEQUV64FP512_ASM)
+	nasm $(ASMD) -o $(VEQUV64FP512_DBG_O) $(VEQUV64FP512_ASM)
+	nasm $(ASMR) -o $(VEQUV64FP512_O) $(VEQUV64FP512_ASM)
+
+$(VMULS32FP256_O) : $(VMULS32FP256_ASM)
+	nasm $(ASMD) -o $(VMULS32FP256_DBG_O) $(VMULS32FP256_ASM)
+	nasm $(ASMR) -o $(VMULS32FP256_O) $(VMULS32FP256_ASM)
+
+$(VMULS32FP512_O) : $(VMULS32FP512_ASM)
+	nasm $(ASMD) -o $(VMULS32FP512_DBG_O) $(VMULS32FP512_ASM)
+	nasm $(ASMR) -o $(VMULS32FP512_O) $(VMULS32FP512_ASM)
+
+$(VMULS64FP256_O) : $(VMULS64FP256_ASM)
+	nasm $(ASMD) -o $(VMULS64FP256_DBG_O) $(VMULS64FP256_ASM)
+	nasm $(ASMR) -o $(VMULS64FP256_O) $(VMULS64FP256_ASM)
+
+$(VMULS64FP512_O) : $(VMULS64FP512_ASM)
+	nasm $(ASMD) -o $(VMULS64FP512_DBG_O) $(VMULS64FP512_ASM)
+	nasm $(ASMR) -o $(VMULS64FP512_O) $(VMULS64FP512_ASM)
+
+$(VMULV32FP256_O) : $(VMULV32FP256_ASM)
+	nasm $(ASMD) -o $(VMULV32FP256_DBG_O) $(VMULV32FP256_ASM)
+	nasm $(ASMR) -o $(VMULV32FP256_O) $(VMULV32FP256_ASM)
+
+$(VMULV32FP512_O) : $(VMULV32FP512_ASM)
+	nasm $(ASMD) -o $(VMULV32FP512_DBG_O) $(VMULV32FP512_ASM)
+	nasm $(ASMR) -o $(VMULV32FP512_O) $(VMULV32FP512_ASM)
+
+$(VMULV64FP256_O) : $(VMULV64FP256_ASM)
+	nasm $(ASMD) -o $(VMULV64FP256_DBG_O) $(VMULV64FP256_ASM)
+	nasm $(ASMR) -o $(VMULV64FP256_O) $(VMULV64FP256_ASM)
+
+$(VMULV64FP512_O) : $(VMULV64FP512_ASM)
+	nasm $(ASMD) -o $(VMULV64FP512_DBG_O) $(VMULV64FP512_ASM)
+	nasm $(ASMR) -o $(VMULV64FP512_O) $(VMULV64FP512_ASM)
+
+$(VSPRV32FP256_O) : $(VSPRV32FP256_ASM)
+	nasm $(ASMD) -o $(VSPRV32FP256_DBG_O) $(VSPRV32FP256_ASM)
+	nasm $(ASMR) -o $(VSPRV32FP256_O) $(VSPRV32FP256_ASM)
+
+$(VSPRV32FP512_O) : $(VSPRV32FP512_ASM)
+	nasm $(ASMD) -o $(VSPRV32FP512_DBG_O) $(VSPRV32FP512_ASM)
+	nasm $(ASMR) -o $(VSPRV32FP512_O) $(VSPRV32FP512_ASM)
+
+$(VSPRV64FP256_O) : $(VSPRV64FP256_ASM)
+	nasm $(ASMD) -o $(VSPRV64FP256_DBG_O) $(VSPRV64FP256_ASM)
+	nasm $(ASMR) -o $(VSPRV64FP256_O) $(VSPRV64FP256_ASM)
+
+$(VSPRV64FP512_O) : $(VSPRV64FP512_ASM)
+	nasm $(ASMD) -o $(VSPRV64FP512_DBG_O) $(VSPRV64FP512_ASM)
+	nasm $(ASMR) -o $(VSPRV64FP512_O) $(VSPRV64FP512_ASM)
+
+$(VSUBS32FP256_O) : $(VSUBS32FP256_ASM)
+	nasm $(ASMD) -o $(VSUBS32FP256_DBG_O) $(VSUBS32FP256_ASM)
+	nasm $(ASMR) -o $(VSUBS32FP256_O) $(VSUBS32FP256_ASM)
+
+$(VSUBS32FP512_O) : $(VSUBS32FP512_ASM)
+	nasm $(ASMD) -o $(VSUBS32FP512_DBG_O) $(VSUBS32FP512_ASM)
+	nasm $(ASMR) -o $(VSUBS32FP512_O) $(VSUBS32FP512_ASM)
+
+$(VSUBS64FP256_O) : $(VSUBS64FP256_ASM)
+	nasm $(ASMD) -o $(VSUBS64FP256_DBG_O) $(VSUBS64FP256_ASM)
+	nasm $(ASMR) -o $(VSUBS64FP256_O) $(VSUBS64FP256_ASM)
+
+$(VSUBS64FP512_O) : $(VSUBS64FP512_ASM)
+	nasm $(ASMD) -o $(VSUBS64FP512_DBG_O) $(VSUBS64FP512_ASM)
+	nasm $(ASMR) -o $(VSUBS64FP512_O) $(VSUBS64FP512_ASM)
+
+$(VSUBV32FP256_O) : $(VSUBV32FP256_ASM)
+	nasm $(ASMD) -o $(VSUBV32FP256_DBG_O) $(VSUBV32FP256_ASM)
+	nasm $(ASMR) -o $(VSUBV32FP256_O) $(VSUBV32FP256_ASM)
+
+$(VSUBV32FP512_O) : $(VSUBV32FP512_ASM)
+	nasm $(ASMD) -o $(VSUBV32FP512_DBG_O) $(VSUBV32FP512_ASM)
+	nasm $(ASMR) -o $(VSUBV32FP512_O) $(VSUBV32FP512_ASM)
+
+$(VSUBV64FP256_O) : $(VSUBV64FP256_ASM)
+	nasm $(ASMD) -o $(VSUBV64FP256_DBG_O) $(VSUBV64FP256_ASM)
+	nasm $(ASMR) -o $(VSUBV64FP256_O) $(VSUBV64FP256_ASM)
+
+$(VSUBV64FP512_O) : $(VSUBV64FP512_ASM)
+	nasm $(ASMD) -o $(VSUBV64FP512_DBG_O) $(VSUBV64FP512_ASM)
+	nasm $(ASMR) -o $(VSUBV64FP512_O) $(VSUBV64FP512_ASM)
+
+
+## phoney targets
+clean :
+	rm -f source/*.o
+
+#debug :
+#	gdb -x $(WDSIMD_GDB)
+
+purge :
+	rm -f source/*.o
+	rm -f $(WDSIMD_LIB) $(WDSIMD_DBG_LIB)
+
+
+# end of wdsimd.Makefile
